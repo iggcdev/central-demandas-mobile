@@ -2,10 +2,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialFeedbacks, initialRequests } from "../data/seed";
 
 const KEY = "central-demandas.requests.v1";
+const REQUEST_SEED_VERSION_KEY = "central-demandas.requests.seed.v2";
 const USER_KEY = "central-demandas.user.v1";
 const FEEDBACK_KEY = "central-demandas.feedback.v1";
 const FEEDBACK_SEED_VERSION_KEY = "central-demandas.feedback.seed.v2";
 export async function getRequests() {
+  const seedVersion = await AsyncStorage.getItem(REQUEST_SEED_VERSION_KEY);
+  if (!seedVersion) {
+    await AsyncStorage.setItem(KEY, JSON.stringify(initialRequests));
+    await AsyncStorage.setItem(REQUEST_SEED_VERSION_KEY, "v2");
+    return initialRequests;
+  }
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) {
     await AsyncStorage.setItem(KEY, JSON.stringify(initialRequests));
