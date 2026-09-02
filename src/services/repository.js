@@ -3,6 +3,7 @@ import { initialRequests } from "../data/seed";
 
 const KEY = "central-demandas.requests.v1";
 const USER_KEY = "central-demandas.user.v1";
+const FEEDBACK_KEY = "central-demandas.feedback.v1";
 export async function getRequests() {
   const raw = await AsyncStorage.getItem(KEY);
   if (!raw) {
@@ -22,4 +23,13 @@ export async function getUser() {
 
 export async function saveUser(name) {
   await AsyncStorage.setItem(USER_KEY, name);
+}
+
+export async function getFeedbacks() {
+  const raw = await AsyncStorage.getItem(FEEDBACK_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+export async function saveFeedbacks(feedbacks) {
+  await AsyncStorage.setItem(FEEDBACK_KEY, JSON.stringify(feedbacks));
 }

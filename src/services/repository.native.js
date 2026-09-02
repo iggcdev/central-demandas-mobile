@@ -3,6 +3,7 @@ import { initialRequests } from "../data/seed";
 
 const KEY = "requests";
 const USER_KEY = "user";
+const FEEDBACK_KEY = "feedbacks";
 let database;
 
 function db() {
@@ -24,3 +25,5 @@ export async function getRequests() {
 export async function saveRequests(requests) { setValue(KEY, JSON.stringify(requests)); }
 export async function getUser() { return getValue(USER_KEY); }
 export async function saveUser(name) { setValue(USER_KEY, name); }
+export async function getFeedbacks() { return JSON.parse(getValue(FEEDBACK_KEY) || "[]"); }
+export async function saveFeedbacks(feedbacks) { setValue(FEEDBACK_KEY, JSON.stringify(feedbacks)); }
