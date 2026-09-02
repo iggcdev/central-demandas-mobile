@@ -1,5 +1,11 @@
 export const categories = ["Dados e relatórios", "Acesso a sistemas", "Incidente", "Melhoria", "Dúvida técnica"];
 export const priorities = ["Baixa", "Média", "Alta", "Crítica"];
+const demoPeople = [
+  "Carlos G.", "Aline O.", "Leandro S.", "Larissa R.", "Allana M.", "Bruno F.", "Camila P.",
+  "Diego A.", "Eduarda V.", "Felipe N.", "Gabriela T.", "Henrique L.", "Isabela C.", "João R.",
+  "Karina B.", "Lucas M.", "Mariana D.", "Nicolas H.", "Olívia S.", "Paulo E.", "Rafaela K.",
+  "Sérgio P.", "Tatiane F.", "Victor A.", "Yasmin G.", "Zeca L."
+];
 
 function demoTimestamp(index, total, minuteOffset = 0) {
   const businessDays = [];
@@ -37,7 +43,7 @@ export const initialRequests = requestTemplates.map(([title, category, priority,
   const history = [{ date: createdAt, text: "Solicitação fictícia registrada para demonstração." }];
   if (status === "Concluída") history.push({ date: demoTimestamp(index, requestTemplates.length, 2), text: "Atendimento concluído e disponibilizado para validação." });
   if (status === "Em atendimento") history.push({ date: demoTimestamp(index, requestTemplates.length, 1), text: "Demanda direcionada para análise da equipe responsável." });
-  return { id: `DEM-${1001 + index}`, title, category, priority, description, status, createdAt, requester: `Participante fictício ${String((index % 26) + 1).padStart(2, "0")}`, history, rating: null };
+  return { id: `DEM-${1001 + index}`, title, category, priority, description, status, createdAt, requester: demoPeople[index % demoPeople.length], history, rating: null };
 });
 
 const feedbackComments = [
@@ -58,7 +64,7 @@ export const initialFeedbacks = Array.from({ length: 26 }, (_, index) => {
   const rating = index < 21 ? 5 : index < 25 ? 4 : 3;
   return {
     id: `FB-DEMO-${String(index + 1).padStart(2, "0")}`,
-    user: `Participante fictício ${String(index + 1).padStart(2, "0")}`,
+    user: demoPeople[index],
     rating,
     comment: feedbackComments[index % feedbackComments.length],
     createdAt: demoTimestamp(index, 26, 3)
