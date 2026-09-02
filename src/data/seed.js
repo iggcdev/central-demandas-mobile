@@ -1,6 +1,18 @@
 export const categories = ["Dados e relatórios", "Acesso a sistemas", "Incidente", "Melhoria", "Dúvida técnica"];
 export const priorities = ["Baixa", "Média", "Alta", "Crítica"];
 
+function demoTimestamp(index, total, minuteOffset = 0) {
+  const businessDays = [];
+  for (const date = new Date(2026, 6, 1); date <= new Date(2026, 7, 31); date.setDate(date.getDate() + 1)) {
+    if (date.getDay() !== 0 && date.getDay() !== 6) businessDays.push(new Date(date));
+  }
+  const date = businessDays[Math.round((index * (businessDays.length - 1)) / Math.max(total - 1, 1))];
+  const hours = [8, 9, 10, 11, 13, 14, 15, 16, 17];
+  const hour = hours[index % hours.length];
+  const minute = String(5 + ((index * 11) % 40) + minuteOffset * 5).padStart(2, "0");
+  return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}, ${String(hour).padStart(2, "0")}:${minute}`;
+}
+
 const requestTemplates = [
   ["Acesso ao painel de indicadores", "Acesso a sistemas", "Média", "Solicitação de acesso de demonstração ao painel de indicadores fictícios.", "Concluída"],
   ["Ajuste em categoria de relatório gerencial", "Melhoria", "Baixa", "Revisão de uma categoria de relatório contendo apenas dados de exemplo.", "Concluída"],
@@ -21,10 +33,10 @@ const requestTemplates = [
 
 // Dados exclusivamente fictícios para demonstrar a rotina de dados e sistemas.
 export const initialRequests = requestTemplates.map(([title, category, priority, description, status], index) => {
-  const createdAt = `0${index < 8 ? 1 : 2}/09/2026, ${String(8 + (index % 8)).padStart(2, "0")}:${String((index % 4) * 15).padStart(2, "0")}`;
+  const createdAt = demoTimestamp(index, requestTemplates.length);
   const history = [{ date: createdAt, text: "Solicitação fictícia registrada para demonstração." }];
-  if (status === "Concluída") history.push({ date: `02/09/2026, ${String(10 + (index % 7)).padStart(2, "0")}:30`, text: "Atendimento concluído e disponibilizado para validação." });
-  if (status === "Em atendimento") history.push({ date: "02/09/2026, 14:00", text: "Demanda direcionada para análise da equipe responsável." });
+  if (status === "Concluída") history.push({ date: demoTimestamp(index, requestTemplates.length, 2), text: "Atendimento concluído e disponibilizado para validação." });
+  if (status === "Em atendimento") history.push({ date: demoTimestamp(index, requestTemplates.length, 1), text: "Demanda direcionada para análise da equipe responsável." });
   return { id: `DEM-${1001 + index}`, title, category, priority, description, status, createdAt, requester: `Participante fictício ${String((index % 26) + 1).padStart(2, "0")}`, history, rating: null };
 });
 
@@ -49,6 +61,6 @@ export const initialFeedbacks = Array.from({ length: 26 }, (_, index) => {
     user: `Participante fictício ${String(index + 1).padStart(2, "0")}`,
     rating,
     comment: feedbackComments[index % feedbackComments.length],
-    createdAt: `02/09/2026, ${String(9 + Math.floor(index / 4)).padStart(2, "0")}:${String((index % 4) * 15).padStart(2, "0")}`
+    createdAt: demoTimestamp(index, 26, 3)
   };
 });

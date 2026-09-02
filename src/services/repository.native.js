@@ -2,10 +2,10 @@ import * as SQLite from "expo-sqlite";
 import { initialFeedbacks, initialRequests } from "../data/seed";
 
 const KEY = "requests";
-const REQUEST_SEED_VERSION_KEY = "requests_seed_v2";
+const REQUEST_SEED_VERSION_KEY = "requests_seed_v3";
 const USER_KEY = "user";
 const FEEDBACK_KEY = "feedbacks";
-const FEEDBACK_SEED_VERSION_KEY = "feedbacks_seed_v2";
+const FEEDBACK_SEED_VERSION_KEY = "feedbacks_seed_v3";
 let database;
 
 function db() {
@@ -21,7 +21,7 @@ function setValue(key, value) { db().runSync("INSERT OR REPLACE INTO app_state (
 export async function getRequests() {
   if (!getValue(REQUEST_SEED_VERSION_KEY)) {
     setValue(KEY, JSON.stringify(initialRequests));
-    setValue(REQUEST_SEED_VERSION_KEY, "v2");
+    setValue(REQUEST_SEED_VERSION_KEY, "v3");
     return initialRequests;
   }
   const value = getValue(KEY);
@@ -35,7 +35,7 @@ export async function saveUser(name) { setValue(USER_KEY, name); }
 export async function getFeedbacks() {
   if (!getValue(FEEDBACK_SEED_VERSION_KEY)) {
     setValue(FEEDBACK_KEY, JSON.stringify(initialFeedbacks));
-    setValue(FEEDBACK_SEED_VERSION_KEY, "v2");
+    setValue(FEEDBACK_SEED_VERSION_KEY, "v3");
     return initialFeedbacks;
   }
   return JSON.parse(getValue(FEEDBACK_KEY) || "[]");
