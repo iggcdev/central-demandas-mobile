@@ -1,0 +1,21 @@
+{
+  "name": "central-demandas-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "web": "expo start --web",
+    "export:web": "expo export --platform web --output-dir dist"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "^57.0.15",
+    "@react-native-async-storage/async-storage": "^2.1.0",
+    "expo": "^53.0.0",
+    "expo-sqlite": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native": "^0.79.0",
+    "react-native-web": "^0.20.0"
+  }
+}
